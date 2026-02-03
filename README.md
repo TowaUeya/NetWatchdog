@@ -1,15 +1,15 @@
-NetWatchdog - Setup Guide
+# NetWatchdog - Setup Guide
 
-Shared state/log directory:
+## Shared state/log directory:
 - C:\Users\Public\NetWatchdog\
   - state.json, NetWatchdog.log, Popup.log
 
-Install location suggestion:
+## Install location suggestion:
 - Put scripts under: C:\ProgramData\NetWatchdog\
   - NetWatchdog_Watchdog.ps1
   - NetWatchdog_Popup.ps1
 
-TASK 1: "NetWatchdog - Watchdog" (SYSTEM)
+## TASK 1: "NetWatchdog - Watchdog" (SYSTEM)
 - General:
   - Run whether user is logged on or not
   - Run with highest privileges
@@ -24,7 +24,7 @@ TASK 1: "NetWatchdog - Watchdog" (SYSTEM)
 - Settings:
   - If the task is already running: Do not start a new instance
 
-TASK 2: "NetWatchdog - Popup" (interactive user)
+## TASK 2: "NetWatchdog - Popup" (interactive user)
 - General:
   - Run only when user is logged on
   - Choose the user account you normally remote in with (so the popup appears in that desktop)
@@ -38,7 +38,7 @@ TASK 2: "NetWatchdog - Popup" (interactive user)
   - Arguments:
     -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\ProgramData\NetWatchdog\NetWatchdog_Popup.ps1"
 
-How it works:
+## How it works:
 - Watchdog checks TCP(443) connectivity to several sites.
 - If down: waits 3m,3m,3m; still down -> writes state.json and emits event 910 (Application log).
 - Popup task triggers on that event, reads state.json and shows OK/Cancel.
