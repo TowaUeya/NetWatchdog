@@ -161,6 +161,14 @@ try {
     exit 0
   }
 
+  $flag = Join-Path $env:PUBLIC "NetWatchdog\postreboot.flag"
+  $payload = @{
+    createdUtc = [DateTime]::UtcNow.ToString("o")
+    reason = "watchdog_reboot"
+    token = $token
+  } | ConvertTo-Json -Depth 5
+  $payload | Set-Content -Path $flag -Encoding UTF8
+
   Log "Proceeding to reboot now (token=$token)."
   # Force close apps to ensure reboot happens and remote access recovers
   & shutdown.exe /r /f /c "NetWatchdog: network down; rebooting to recover remote access" | Out-Null
